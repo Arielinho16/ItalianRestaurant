@@ -1,10 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import MenuItem, OrderItem, Cart, Order, Categoria
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib import messages
+from .forms import CustomUserCreationForm
 
 # Vista para la página de inicio
 def home(request):
     return render(request, "cuerpo_html/home.html")
+
+
+def register(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Iniciar sesión automáticamente después del registro
+            return redirect("home")  # Redirigir a la página de inicio
+    else:
+        form = CustomUserCreationForm()
+    return render(request, "cuerpo_html/register.html", {"form": form})
 
 
 def items_por_categoria(request, categoria_id):

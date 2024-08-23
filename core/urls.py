@@ -1,4 +1,6 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 from . import views
 
 
@@ -20,5 +22,12 @@ urlpatterns = [
     ),
     path("process_order/", views.process_order, name="process_order"),
     path("order/<int:order_id>/", views.order_detail, name="order_detail"),
+    path("register/", views.register, name="register"),
+    path(
+        "login/",
+        auth_views.LoginView.as_view(template_name="cuerpo_html/login.html"),
+        name="login",
+    ),
+    path("logout/", LogoutView.as_view(), name="logout"),
     # Agrega más rutas aquí si es necesario
 ]
