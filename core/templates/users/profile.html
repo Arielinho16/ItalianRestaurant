@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Tu Perfil</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="profile_picture">Foto de perfil</label>
+                    <div>
+                        <img src="{% if user.profile.profile_picture and user.profile.profile_picture.name %}{{ user.profile.profile_picture.url }}{% else %}{{ MEDIA_URL }}profile_pics/default_profile.jpg{% endif %}"
+                        class="img-thumbnail"
+                        style="max-width: 300px;">
+                   
+                    </div>
+                    {{ p_form.profile_picture }}
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="username">Nombre de usuario</label>
+                    {{ u_form.username|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    {{ u_form.email|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Número de teléfono</label>
+                    {{ p_form.phone_number|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    <label for="address">Dirección</label>
+                    {{ p_form.address|as_crispy_field }}
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

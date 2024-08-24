@@ -91,10 +91,10 @@
                     </a>
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li>
-                            <a href="/" class="nav-link px-2 link-secondary">HOME</a>
+                            <a href="{% url 'home' %}" class="nav-link px-2 link-secondary">HOME</a>
                         </li>
                         <li>
-                            <a href="menu/" class="nav-link px-2 link-body-emphasis">MENU</a>
+                            <a href="{% url 'menu_list' %}" class="nav-link px-2 link-body-emphasis">MENU</a>
                         </li>
                         <li>
                             <a href="#" class="nav-link px-2 link-body-emphasis">ABOUT</a>
@@ -113,22 +113,22 @@
                                aria-label="Search">
                     </form>
                     <div class="dropdown text-end">
-                        <a href="#"
-                           class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            <img src="https://github.com/mdo.png"
-                                 alt="mdo"
-                                 width="32"
-                                 height="32"
-                                 class="rounded-circle">
+                        <a href="{% url 'profile' %}"
+                        class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="{% if user.profile.profile_picture and user.profile.profile_picture.url %}{{ user.profile.profile_picture.url }}{% else %}{{ MEDIA_URL }}profile_pics/default_profile.jpg{% endif %}"
+                            alt="{{ user.username }}"
+                            width="32"
+                            height="32"
+                            class="rounded-circle">
+
                         </a>
                         <ul class="dropdown-menu text-small">
                             {% if user.is_authenticated %}
-                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href="{% url 'profile' %}">Perfil</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <!-- Formulario POST oculto para logout -->
                                     <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
                                         {% csrf_token %}
                                     </form>
@@ -142,14 +142,15 @@
                             {% endif %}
                         </ul>
                     </div>
-                    
                 </div>
             </div>
         </header>
+
         <!-- Fin del Navbar -->
-        <div class="container mt-4">
+        <div id="bodycontent">
             {% block content %}<!-- Aquí irá el contenido específico de cada página -->{% endblock %}
         </div>
+
         <div class="container">
             <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
                 <div class="col-md-4 d-flex align-items-center">

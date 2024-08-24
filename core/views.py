@@ -1,25 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import MenuItem, OrderItem, Cart, Order, Categoria
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib import messages
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.decorators import login_required
+
 
 # Vista para la página de inicio
 def home(request):
     return render(request, "cuerpo_html/home.html")
-
-
-def register(request):
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)  # Iniciar sesión automáticamente después del registro
-            return redirect("home")  # Redirigir a la página de inicio
-    else:
-        form = CustomUserCreationForm()
-    return render(request, "cuerpo_html/register.html", {"form": form})
 
 
 def items_por_categoria(request, categoria_id):
@@ -122,3 +111,38 @@ def process_order(request):
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, "cuerpo_html/order_detail.html", {"order": order})
+
+
+# Función para registrar un nuevo usuario
+def register(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Iniciar sesión automáticamente después del registro
+            return redirect("home")  # Redirigir a la página de inicio
+    else:
+        form = CustomUserCreationForm()
+    return render(request, "users/register.html", {"form": form})
+
+
+# Función para modificar el perfil de un usuario
+@login_required
+def profile(request):
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.profile
+        )
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, "¡Tu perfil ha sido actualizado con éxito!")
+            return redirect("profile")
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {"u_form": u_form, "p_form": p_form}
+
+    return render(request, "users/profile.html", context)
