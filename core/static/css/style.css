@@ -77,3 +77,73 @@ header {
         font-size: 3vw;
     }
 }
+
+.feature-section {
+    padding: 40px 0;
+    /* Espaciado superior e inferior opcional */
+}
+
+.feature-box {
+    padding: 20px;
+    color: #fff;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    text-align: center;
+    transition: transform 0.3s;
+
+}
+
+.feature-box:hover {
+    transform: scale(1.025);
+    /* Hace que el cuadro crezca un poco al hacer hover */
+}
+
+.feature-box-green {
+    background-color: #008C45;
+    /* Verde de la bandera de Italia */
+}
+
+.feature-box-white {
+    background-color: #ffffff;
+    /* Blanco */
+    color: #000;
+    /* Cambia el color del texto a negro para que sea visible */
+}
+
+.feature-box-red {
+    background-color: #CD212A;
+    /* Rojo de la bandera de Italia */
+}
+
+.feature-box-green:hover {
+
+    background-color: #02a754;
+    /* Verde de la bandera de Italia */
+}
+
+.feature-box-white:hover {
+    background-color: #ffffffe3;
+    /* Blanco */
+    color: #000;
+    /* Cambia el color del texto a negro para que sea visible */
+}
+
+.feature-box-red:hover {
+    background-color: #de343d;
+    /* Rojo de la bandera de Italia */
+}
+
+.feature-section .row {
+    display: flex;
+    flex-wrap: nowrap;
+    /* Impide que los cuadros se vayan a la siguiente línea */
+}
+
+.feature-section .col-lg-4 {
+    padding: 0;
+    /* Elimina el padding entre los contenedores de las columnas */
+    flex: 1;
+    /* Hace que cada columna ocupe el mismo ancho */
+}
