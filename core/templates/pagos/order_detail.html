@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h2>Detalles del Pedido</h2>
+        <p>Gracias por tu pedido. Aquí están los detalles:</p>
+        <p><strong>Pedido ID:</strong> {{ order.id }}</p>
+        <ul>
+            {% for item in order.items.all %}
+                <li>{{ item.quantity }} x {{ item.menu_item.name }} - ${{ item.menu_item.price }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total:</strong> ${{ order.get_total }}</p>
+        
+        <!-- Botón para redirigir a la pasarela de pagos de Stripe -->
+        <form action="{% url 'stripe_checkout' order.id %}" method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+                <button type="submit" class="btn btn-primary mt-3 mb-3">Realizar Pedido</button>
+            {% else %}
+                <a href="{% url 'login' %}?next={% url 'stripe_checkout' order.id %}" class="btn btn-primary mt-3 mb-3">Iniciar Sesión para Realizar Pedido</a>
+            {% endif %}
+        </form>
+        
+    </div>
+{% endblock content %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Panel de Gestión de Pedidos</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <h3>En Preparación</h3>
+            <div class="card">
+                <ul class="list-group">
+                    {% for pedido in pedidos.en_preparacion %}
+                    <li class="list-group-item">
+                        Pedido ID: {{ pedido.id }}
+                        <button class="btn btn-success" data-pedido-id="{{ pedido.id }}" data-estado="enviado">Marcar como Enviado</button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Enviado</h3>
+            <div class="card">
+                <ul class="list-group">
+                    {% for pedido in pedidos.enviado %}
+                    <li class="list-group-item">
+                        Pedido ID: {{ pedido.id }}
+                        <button class="btn btn-primary" data-pedido-id="{{ pedido.id }}" data-estado="entregado">Marcar como Entregado</button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Entregado</h3>
+            <div class="card">
+                <ul class="list-group">
+                    {% for pedido in pedidos.entregado %}
+                    <li class="list-group-item">
+                        Pedido ID: {{ pedido.id }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', function () {
+            const pedidoId = this.dataset.pedidoId; // Obtiene el ID del pedido
+            const estado = this.dataset.estado; // Obtiene el nuevo estado
+    
+            fetch(`/users/update_estado/${pedidoId}/`, { // Asegúrate de usar la URL correcta
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}', // Incluye el token CSRF
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ estado }), // Envía el nuevo estado en el cuerpo
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Espera la respuesta en JSON
+                } else {
+                    throw new Error('Error al actualizar el estado');
+                }
+            })
+            .then(data => {
+                // Actualiza la interfaz de usuario dinámicamente sin recargar
+                if (data.status === 'success') {
+                    alert('Estado actualizado con éxito');
+                    location.reload(); // Opcional: recarga la página para actualizar el contenido
+                } else {
+                    alert(data.message || 'Error al actualizar el estado');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Error al actualizar el estado');
+            });
+        });
+    });
+    
+</script>
+{% endblock %}
+
+

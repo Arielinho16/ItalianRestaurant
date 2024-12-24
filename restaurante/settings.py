@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,8 +53,10 @@ ROOT_URLCONF = "restaurante.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
+        "DIRS": [
+            BASE_DIR / "core/templates",  # Si tienes plantillas globales
+        ],
+        "APP_DIRS": True,  # Esto habilita la búsqueda en carpetas templates de cada app
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -64,6 +67,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "restaurante.wsgi.application"
 
@@ -129,3 +133,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # URL base para acceder a los archivos subidos
 MEDIA_URL = "/media/"
+
+# Stripe Configuration
+
+
+# Stripe Configuration
+STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default="")
+STRIPE_PUBLISHABLE_KEY = config("STRIPE_PUBLISHABLE_KEY", default="")

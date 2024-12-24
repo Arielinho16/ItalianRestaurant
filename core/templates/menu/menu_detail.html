@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Detalles de {{ item.name }}
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>{{ item.name }}</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% if item.image %}{{ item.image.url }}{% else %}{% static 'images/default_item.png' %}{% endif %}"
+                     alt="{{ item.name }}"
+                     class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <p style="font-size: 1.25rem;">{{ item.description }}</p>
+                <p>
+                    <strong style="font-size: 1.25rem;">Precio: ${{ item.price }}</strong>
+                </p>
+                <a href="{% url 'add_to_cart' item.id %}" class="btn btn-primary">Añadir al carrito</a>
+                
+                {% if user.is_staff %}
+                    <a href="{% url 'edit_menu_item' item.id %}" class="btn btn-warning">Editar Item</a>
+                {% endif %}
+            </div>
+        </div>
+        <a href="{% url 'menu_list' %}" class="btn btn-secondary mt-5">Volver</a>
+    </div>
+{% endblock content %}

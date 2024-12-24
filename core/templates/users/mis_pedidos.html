@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2 class="mt-5">Mis Pedidos</h2>
+    <ul class="list-group mb-5">
+        {% for pedido in pedidos %}
+        <li class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+                <span>Pedido ID: {{ pedido.id }}</span>
+                <div>
+                    <span class="badge 
+                        {% if pedido.estado == 'en_preparacion' %} bg-primary 
+                        {% elif pedido.estado == 'enviado' %} bg-warning text-dark 
+                        {% elif pedido.estado == 'entregado' %} bg-success 
+                        {% endif %}">
+                        {{ pedido.get_estado_display }}
+                    </span>
+                    
+                </div>
+            </div>
+            <ul class="mt-2">
+                {% for item in pedido.items.all %}
+                <li>{{ item.quantity }} x {{ item.menu_item.name }}</li>
+                <span>Total: ${{ pedido.get_total }}</span>
+                {% endfor %} 
+                
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+

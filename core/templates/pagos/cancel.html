@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Pago Cancelado</h1>
+    <p>El proceso de pago fue cancelado. Por favor, inténtalo nuevamente.</p>
+    <div class="d-flex gap-2 mt-3">
+        {% if order %}
+        <a href="{% url 'order_detail' order.id %}" class="btn btn-primary mb-3">Volver al pedido</a>
+        {% endif %}
+        <a href="{% url 'menu_list' %}" class="btn btn-primary mb-3">Volver al menú</a>
+    </div>
+</div>
+{% endblock %}

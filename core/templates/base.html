@@ -11,6 +11,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                 crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Grey+Qo&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Qwitcher+Grypen:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
         <title>
             {% block title %}
                 Restaurante
@@ -73,48 +76,105 @@
             </path>
             </symbol>
         </svg>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Allura&family=Grey+Qo&family=Qwitcher+Grypen:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+            #bodycontent {
+                flex: 1;
+            }
+            footer {
+                background: radial-gradient(circle, rgba(24, 24, 24, 0.932) 0%, rgba(34, 34, 34, 1) 60%, rgba(26, 26, 26, 1) 80%, rgba(17, 17, 17, 1) 100%);
+                color: #ffffff;
+                font-family: 'Arial', sans-serif;
+                padding: 1rem;
+                text-align: center;
+                width: 100%;
+                margin-top: auto;
+            }
+
+            #search-results {
+                top: 100%; /* Posiciona justo debajo del campo de búsqueda */
+                left: 0;
+                right: 0;
+                max-height: 300px; /* Opcional: controla la altura máxima */
+                overflow-y: auto; /* Habilita el desplazamiento si hay demasiados resultados */
+                display: none; /* Por defecto, está oculto */
+                z-index: 1050; /* Asegura que esté encima de otros elementos */
+                background-color: rgba(35, 35, 35, 0.75); /* Fondo blanco con 85% de opacidad */
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle un efecto flotante */
+                border-radius: 4px; /* Bordes redondeados */
+                backdrop-filter: blur(8px); /* Desenfoque detrás del fondo */
+                padding: 10px; /* Espaciado interno */
+            }
+            
+        </style>
     </head>
-    <body>
-        <header class="p-3 mb-3 border-bottom">
+<body>
+        <header class="p-3 border-bottom" style="background: radial-gradient(circle, rgba(24, 24, 24, 0.932) 0%, rgba(34, 34, 34, 1) 60%, rgba(26, 26, 26, 1) 80%, rgba(17, 17, 17, 1) 100%); color: #ffffff; font-family: 'Arial', sans-serif;">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="/"
-                       class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                        <svg class="bi me-2"
-                             width="40"
-                             height="32"
-                             role="img"
-                             aria-label="Bootstrap">
-                            <use xlink:href="#bootstrap"></use>
-                        </svg>
-                    </a>
+                    
+                       <img src="{% static 'images/logo.png' %}" 
+                       width="70"
+                       height="70"
+                       alt="Descripción de la imagen"
+                       data-bs-toggle="modal"
+                       data-bs-target="#imageModal">
+                       <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <img src="{% static 'images/logo.png' %}" 
+                                   class="img-fluid" 
+                                   alt="Descripción de la imagen">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                       
+                    
+                    
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li>
-                            <a href="{% url 'home' %}" class="nav-link px-2 link-secondary">HOME</a>
+                            <a href="{% url 'home' %}" class="nav-link px-2" style="color: #ffffff;">INICIO</a>
                         </li>
                         <li>
-                            <a href="{% url 'menu_list' %}" class="nav-link px-2 link-body-emphasis">MENU</a>
+                            <a href="{% url 'menu_list' %}" class="nav-link px-2" style="color: #ffffff;">MENÚ</a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link px-2 link-body-emphasis">ABOUT</a>
+                            <a href="#" class="nav-link px-2" style="color: #ffffff;">SOBRE NOSOTROS</a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link px-2 link-body-emphasis">BLOG</a>
+                            <a href="#" class="nav-link px-2" style="color: #ffffff;">BLOG</a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link px-2 link-body-emphasis">CONTACT</a>
+                            <a href="#" class="nav-link px-2" style="color: #ffffff;">CONTACTO</a>
                         </li>
                     </ul>
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 position-relative" role="search">
                         <input type="search"
+                               id="search-input"
                                class="form-control"
-                               placeholder="Search..."
-                               aria-label="Search">
+                               placeholder="Buscar por producto o categoría..."
+                               aria-label="Buscar">
+                        <div id="search-results" class="mt-2 position-absolute shadow rounded p-2" style="display: none; z-index: 1000;"></div>
                     </form>
+                    
+                    
                     <div class="dropdown text-end">
                         <a href="{% url 'profile' %}"
-                        class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                        class="d-block text-decoration-none dropdown-toggle" style="color: #ffffff;" 
                         data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <img src="{% if user.profile.profile_picture and user.profile.profile_picture.url %}{{ user.profile.profile_picture.url }}{% else %}{{ MEDIA_URL }}profile_pics/default_profile.jpg{% endif %}"
@@ -127,6 +187,12 @@
                         <ul class="dropdown-menu text-small">
                             {% if user.is_authenticated %}
                                 <li><a class="dropdown-item" href="{% url 'profile' %}">Perfil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                {% if user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url 'panel_pedidos' %}">Ver Pedidos</a></li>
+                                {% else %}
+                                    <li><a class="dropdown-item" href="{% url 'mis_pedidos' %}">Mis Pedidos</a></li>
+                                {% endif %}
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
@@ -141,6 +207,7 @@
                                 <li><a class="dropdown-item" href="{% url 'register' %}">Registrarse</a></li>
                             {% endif %}
                         </ul>
+                        
                     </div>
                 </div>
             </div>
@@ -151,41 +218,102 @@
             {% block content %}<!-- Aquí irá el contenido específico de cada página -->{% endblock %}
         </div>
 
-        <div class="container">
-            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top"  style="background: radial-gradient(circle, rgba(24, 24, 24, 0.932) 0%, rgba(34, 34, 34, 1) 60%, rgba(26, 26, 26, 1) 80%, rgba(17, 17, 17, 1) 100%); background-size: cover; color: #ffffff; font-family: 'Arial', sans-serif;">
                 <div class="col-md-4 d-flex align-items-center">
                     <a href="/"
-                       class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                       class="mb-3 me-2 mb-md-0 text-decoration-none lh-1" style="color: #ffffff;">
                         <svg class="bi" width="30" height="24">
                             <use xlink:href="#bootstrap"></use>
                         </svg>
                     </a>
-                    <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</span>
+                    <span class="mb-3 mb-md-0" style="color: #ffffff;">© 2024 Company, Inc</span>
                 </div>
                 <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                     <li class="ms-3">
-                        <a class="text-body-secondary" href="#">
-                            <svg class="bi" width="24" height="24">
+                        <a class="text-body-secondary" href="#" style="color: #ffffff;">
+                            <svg class="bi" width="26" height="26" style="fill: #ffffff;">
                                 <use xlink:href="#twitter"></use>
                             </svg>
                         </a>
                     </li>
                     <li class="ms-3">
-                        <a class="text-body-secondary" href="#">
-                            <svg class="bi" width="24" height="24">
+                        <a class="text-body-secondary" href="#" style="color: #ffffff;">
+                            <svg class="bi" width="26" height="26" style="fill: #ffffff;">
                                 <use xlink:href="#instagram"></use>
                             </svg>
                         </a>
                     </li>
                     <li class="ms-3">
-                        <a class="text-body-secondary" href="#">
-                            <svg class="bi" width="24" height="24">
+                        <a class="text-body-secondary" href="#" style="color: #ffffff;">
+                            <svg class="bi" width="26" height="26" style="fill: #ffffff;">
                                 <use xlink:href="#facebook"></use>
                             </svg>
                         </a>
                     </li>
                 </ul>
-            </footer>
-        </div>
+        </footer>
+
     </body>
+
+   
 </html>
+
+<script>
+    document.getElementById("search-input").addEventListener("input", function () {
+        const query = this.value.trim();
+        const resultsContainer = document.getElementById("search-results");
+    
+        if (query.length > 0) {
+            fetch(`/menu/search/?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    resultsContainer.innerHTML = ""; // Limpiar resultados anteriores
+                    resultsContainer.style.display = "block"; // Mostrar resultados
+    
+                    // Mostrar resultados de productos
+                    if (data.productos.length > 0) {
+                        const productosHeader = document.createElement("h5");
+                        productosHeader.textContent = "Productos:";
+                        resultsContainer.appendChild(productosHeader);
+    
+                        data.productos.forEach(producto => {
+                            const productoItem = document.createElement("div");
+                            productoItem.innerHTML = `<a href="/menu/${producto.id}/" class="text-decoration-none d-block">${producto.name}</a>`;
+                            resultsContainer.appendChild(productoItem);
+                        });
+                    }
+    
+                    // Mostrar resultados de categorías
+                    if (data.categorias.length > 0) {
+                        const categoriasHeader = document.createElement("h5");
+                        categoriasHeader.textContent = "Categorías:";
+                        resultsContainer.appendChild(categoriasHeader);
+    
+                        data.categorias.forEach(categoria => {
+                            const categoriaItem = document.createElement("div");
+                            categoriaItem.innerHTML = `<a href="/menu/categoria/${categoria.id}/" class="text-decoration-none d-block">${categoria.name}</a>`;
+                            resultsContainer.appendChild(categoriaItem);
+                        });
+                    }
+    
+                    // Si no hay resultados
+                    if (data.productos.length === 0 && data.categorias.length === 0) {
+                        resultsContainer.innerHTML = "<p>No se encontraron resultados</p>";
+                    }
+                });
+        } else {
+            resultsContainer.style.display = "none"; // Ocultar si no hay búsqueda
+        }
+    });
+    
+    // Ocultar los resultados cuando el usuario haga clic fuera del campo de búsqueda
+    document.addEventListener("click", function (e) {
+        const searchInput = document.getElementById("search-input");
+        const resultsContainer = document.getElementById("search-results");
+    
+        if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
+            resultsContainer.style.display = "none";
+        }
+    });
+    
+    </script>

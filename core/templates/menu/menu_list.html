@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Menú - Restaurante
+{% endblock title %}
+{% block content %}
+<div class="container" id="menu_detail">
+    
+    {% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+    <h1 class="text-center ">Menú</h1>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        {% if user.is_staff %}
+            <a href="{% url 'add_menu_item' %}" class="btn btn-success">Agregar Item</a>
+            <form method="post" action="{% url 'delete_menu_item' %}" class="d-flex align-items-center ms-3">
+                {% csrf_token %}
+                <input type="text" name="item_name" placeholder="Nombre del Item" class="form-control me-2" required>
+                <button type="submit" class="btn btn-danger">Eliminar Item</button>
+            </form>
+        {% endif %}
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in items %}
+        <div class="col">
+            <div class="card h-100">            
+            {% if item.image %} 
+            <img src="{{ item.image.url }}">
+            {% else %}  <imgsrc="{% static 'images/logo.png' %}" {% endif %}>
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <p class="card-text">
+                        <strong>${{ item.price }}</strong>
+                    </p>
+                    <a href="{% url 'menu_detail' item.id %}" class="btn btn-primary">Más</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <ul>
+        {% for categoria in categorias %}
+        <li>
+            <a href="{% url 'items_por_categoria' categoria.id %}">{{ categoria.nombre }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock content %}
